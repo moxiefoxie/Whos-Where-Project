@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    final Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    final Intent intent = new Intent(getApplicationContext(), Map.class);
                     intent.putExtra("User", userItem.getUserId());
                     startActivity(intent);
                     //Toast.makeText(getApplicationContext(), "Golden", Toast.LENGTH_LONG).show();

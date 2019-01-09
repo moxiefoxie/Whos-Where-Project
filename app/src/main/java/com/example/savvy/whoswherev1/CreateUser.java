@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
@@ -53,6 +54,7 @@ public class CreateUser extends AppCompatActivity {
                 EditText lastName = (EditText) findViewById(R.id.lastName);
                 EditText email = (EditText) findViewById(R.id.email);
                 EditText password = (EditText) findViewById(R.id.password);
+                Switch autoCheck = (Switch) findViewById(R.id.autoCheck);
 
                 if(firstName.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "You need a first name!", Toast.LENGTH_LONG).show();
@@ -63,7 +65,13 @@ public class CreateUser extends AppCompatActivity {
                 } else if(password.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "You need a password!", Toast.LENGTH_LONG).show();
                 } else{
-                    createUserDB(email.getText().toString(), firstName.getText().toString(), lastName.getText().toString(), password.getText().toString());
+                    boolean check;
+                    if(autoCheck.isChecked()){
+                        check = true;
+                    } else {
+                        check = false;
+                    }
+                    createUserDB(email.getText().toString(), firstName.getText().toString(), lastName.getText().toString(), password.getText().toString(), check);
                     Toast.makeText(getApplicationContext(), "User successfully created", Toast.LENGTH_LONG).show();
                     startActivity(intent);
                 }
@@ -93,7 +101,7 @@ public class CreateUser extends AppCompatActivity {
         return al;
     }*/
 
-    public void createUserDB(String email, String firstName, String lastName, String password) {
+    public void createUserDB(String email, String firstName, String lastName, String password, boolean autoCheck) {
 
         final User_DB newUser = new User_DB();
 
@@ -103,6 +111,7 @@ public class CreateUser extends AppCompatActivity {
         newUser.setLast_name(lastName);
         newUser.setPassword(password);
         //newUser.setLocations(locations);
+        newUser.setAuto_check_in(autoCheck);
 
         new Thread(new Runnable() {
             @Override

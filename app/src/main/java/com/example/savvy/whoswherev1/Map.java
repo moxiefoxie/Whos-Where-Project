@@ -23,10 +23,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.amazonaws.services.dynamodbv2.model.Condition;
+//import com.amazonaws.auth.policy.Condition;
+import com.amazonaws.auth.policy.conditions.ArnCondition.ArnComparisonType;
+import com.amazonaws.auth.policy.conditions.StringCondition.StringComparisonType;
+import com.amazonaws.auth.policy.conditions.ConditionFactory;
+import com.amazonaws.auth.policy.conditions.NumericCondition;
+import com.amazonaws.auth.policy.conditions.NumericCondition.NumericComparisonType;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.config.AWSConfiguration;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBQueryExpression;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -41,11 +52,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
+import com.google.gson.Gson;
 
 import java.util.List;
 import java.util.UUID;
 
-public class Map extends AppCompatActivity implements OnMapReadyCallback {
+public class Map extends MainActivity implements OnMapReadyCallback {
 
     View myView;
     @Nullable
@@ -141,6 +153,20 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
         //user user = new user(savvy, spots);
         displaySpots(spots);*/
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        userId = getIntent().getStringExtra("User");
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
 
     }
 
@@ -212,6 +238,10 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
     private void chartSpot(double latitude, double longitude, final double radius, final String id){
         final LatLng test = new LatLng(latitude,longitude);
 
+        //Intent intent = new Intent(this, LocationService.class);
+        //intent.putExtra("User", userId);
+        //startService(intent);
+
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
@@ -265,6 +295,11 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
                     initMap();
                 } else {
                     ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION__REQUEST_CODE);
+
+
+                    Intent intent = new Intent(this, LocationServices.class);
+                    intent.putExtra("User", userId);
+                    startService(intent);
                 }
 
             } else {
@@ -414,6 +449,11 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
             }
         }).start();
     }
+    public void fabOnClick(View v){
+        Intent intent = new Intent(Map.this, spots.class);
+        intent.putExtra("User", userId);
+        startActivity(intent);
+    }
 
     public void updateUser() {
         final User_DB userItem = new User_DB();
@@ -451,5 +491,44 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
             }
         }).start();
     }
+
+    /*public void queryLocations() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                location_db news = new location_db();
+                //news.setUserId(unique-user-id);
+                //news.setArticleId("Article1");
+
+                Condition rangeKeyCondition = new Condition()
+                        .withComparisonOperator(ComparisonOperator.BEGINS_WITH)
+                        .withAttributeValueList(new AttributeValue().withS("Trial"));
+
+                DynamoDBQueryExpression queryExpression = new DynamoDBQueryExpression()
+                        .withHashKeyValues(note)
+                        .withRangeKeyCondition("articleId", rangeKeyCondition)
+                        .withConsistentRead(false);
+
+                PaginatedList<location_db> result = dynamoDBMapper.query(location_db.class, queryExpression);
+
+                Gson gson = new Gson();
+                StringBuilder stringBuilder = new StringBuilder();
+
+                // Loop through query results
+                for (int i = 0; i < result.size(); i++) {
+                    String jsonFormOfItem = gson.toJson(result.get(i));
+                    stringBuilder.append(jsonFormOfItem + "\n\n");
+                }
+
+                // Add your code here to deal with the data result
+                Log.d("Query result: ", stringBuilder.toString());
+
+                if (result.isEmpty()) {
+                    // There were no items matching your query.
+                }
+            }
+        }).start();
+    }*/
 
 }

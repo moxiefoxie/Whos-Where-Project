@@ -19,10 +19,11 @@ import java.util.Set;
 @DynamoDBTable(tableName = "whoswhere-mobilehub-99353394-Users")
 
 public class User_DB {
+    private boolean _auto_check_in;
     private String _userId;
     private String _current_location;
-    private String _first_name;
-    private String _last_name;
+    private static String _first_name;
+    private static String _last_name;
     private List<String> _locations;
     private String _password;
 
@@ -44,7 +45,7 @@ public class User_DB {
         this._current_location = _current_location;
     }
     @DynamoDBAttribute(attributeName = "first_name")
-    public String getFirst_name() {
+    public static String getFirst_name() {
         return _first_name;
     }
 
@@ -52,7 +53,7 @@ public class User_DB {
         this._first_name = _first_name;
     }
     @DynamoDBAttribute(attributeName = "last_name")
-    public String getLast_name() {
+    public static String getLast_name() {
         return _last_name;
     }
 
@@ -75,5 +76,11 @@ public class User_DB {
     public void setPassword(final String _password) {
         this._password = _password;
     }
+    @DynamoDBAttribute(attributeName = "auto_check_in")
+    public boolean getAuto_check_in() {
+        return _auto_check_in;
+    }
+
+    public void setAuto_check_in(final boolean _auto_check_in) { this._auto_check_in = _auto_check_in; }
 
 }
