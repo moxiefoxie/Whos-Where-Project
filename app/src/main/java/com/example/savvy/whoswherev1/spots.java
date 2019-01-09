@@ -1,11 +1,9 @@
 package com.example.savvy.whoswherev1;
 
 import android.Manifest;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -16,19 +14,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -56,7 +48,6 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import java.util.List;
 import java.util.UUID;
 
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.location.LocationCallback;
@@ -73,7 +64,6 @@ import java.util.ArrayList;
 
 public class spots extends AppCompatActivity implements OnMapReadyCallback {
 
-    View myView;
     @Nullable
 
     private static final String TAG = "CreateSpotActivity";
@@ -87,16 +77,12 @@ public class spots extends AppCompatActivity implements OnMapReadyCallback {
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
     private LocationRequest mLocationRequest;
-    Button getCrntBtn;
-    Button createBtn;
     String locName;
     double lat;
     double longi;
     double radi;
-    EditText locNameView;
     DynamoDBMapper dynamoDBMapper;
     String loc;
-    String locID;
     String type;
 
     String user;
@@ -434,84 +420,7 @@ public class spots extends AppCompatActivity implements OnMapReadyCallback {
         longi = location.getLongitude();
         final SeekBar seekBar = (SeekBar)findViewById(R.id.seekBar);
     }
-    public double getLastLocationLat() {
 
-        // Get last known recent location using new Google Play Services SDK (v11+)
-        final FusedLocationProviderClient locationClient = getFusedLocationProviderClient(this);
-
-        locationClient.getLastLocation()
-                .addOnSuccessListener(new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // GPS location can be null if GPS is switched off
-                        if (location != null) {
-                            onLocationChanged(location);
-                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                            double lat = location.getLatitude();
-
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("MapDemoActivity", "Error trying to get last GPS location");
-                        e.printStackTrace();
-                    }
-                });
-        return lat;
-    }
-    public void getLastLocationLong() {
-
-        // Get last known recent location using new Google Play Services SDK (v11+)
-        final FusedLocationProviderClient locationClient = getFusedLocationProviderClient(this);
-
-        locationClient.getLastLocation()
-                .addOnSuccessListener(new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // GPS location can be null if GPS is switched off
-                        if (location != null) {
-                            onLocationChanged(location);
-                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                            double lat = location.getLongitude();
-
-                            setLocation(latLng);
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("MapDemoActivity", "Error trying to get last GPS location");
-                        e.printStackTrace();
-                    }
-                });
-        //return lat;
-    }
-
-    public void setLocation(LatLng latLng){
-        lat = latLng.latitude;
-        longi = latLng.longitude;
-    }
-
-
-    /*public void onMapReady(GoogleMap googleMap) {
-
-        if(checkPermissions()) {
-            googleMap.setMyLocationEnabled(true);
-        }
-    }*/
-
-    private boolean checkPermissions() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        } else {
-            requestPermissions();
-            return false;
-        }
-    }
 
     private void requestPermissions() {
         ActivityCompat.requestPermissions(this,
@@ -523,38 +432,6 @@ public class spots extends AppCompatActivity implements OnMapReadyCallback {
 
     }
 
-
-    public String getLocName() {
-        return locName;
-    }
-
-    public void setLocName(String locName) {
-        this.locName = locName;
-    }
-
-    public double getLat() {
-        return lat;
-    }
-
-    public void setLat(double lat) {
-        this.lat = lat;
-    }
-
-    public double getLongi() {
-        return longi;
-    }
-
-    public void setLongi(double longi) {
-        this.longi = longi;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
 
     public void createLocationDB(double lat, double lng, String name, String email, double radius, String t) {
 
@@ -584,33 +461,14 @@ public class spots extends AppCompatActivity implements OnMapReadyCallback {
             }
         }).start();
 
-        locID = locationID.toString();
         loc = locationID.toString();
         if(t.equals("private")){
             readUser(email);
         }
-        //updateUser(u.id,u.firstName,u.lastName,u.spots,u.password,locationID.toString());
+
+
     }
 
-    /*public void readUser(final String email) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                User_DB userItem = dynamoDBMapper.load(
-                        User_DB.class,
-                        email);
-                updateUser(userItem.getUserId(),userItem.getFirst_name(),userItem.getLast_name(),userItem.getLocations(),userItem.getPassword());
-
-                // Item read
-                Log.d("User Item", userItem.getFirst_name());
-                //u = new user(userItem.getUserId(), userItem.getLocations(), userItem.getFirst_name(), userItem.getLast_name(),  userItem.getPassword());
-
-            }
-        }).start();
-
-        //updateUser(u.id,u.firstName,u.lastName,u.spots,u.password,locationID);
-    }*/
 
     public void readUser(final String email) {
         new Thread(new Runnable() {

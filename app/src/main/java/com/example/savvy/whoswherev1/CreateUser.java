@@ -18,8 +18,7 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 
 public class CreateUser extends AppCompatActivity {
 
-    /*Button createAccount;
-    EditText username;*/
+
     DynamoDBMapper dynamoDBMapper;
 
 
@@ -78,28 +77,8 @@ public class CreateUser extends AppCompatActivity {
             }
         });
 
-        /*final ArrayList <String> al = pullCreatedUsernames();
 
-        createAccount = findViewById(R.id.button_CreateUser);
-        createAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ArrayList <String> al_local = al;
-                username = findViewById(R.id.et_NewUsername);
-                Intent i = new Intent(CreateUser.this,  LoginActivity.class);
-                al_local.add(username.getText().toString());
-                Toast.makeText(getApplicationContext(), username.getText().toString() + " was created successfully", Toast.LENGTH_LONG).show();
-                i.putStringArrayListExtra("updated_usernames",al_local);
-                startActivity(i);
-            }
-        });*/
     }
-
-    /*protected ArrayList<String> pullCreatedUsernames(){
-        Intent i = getIntent();
-        ArrayList<String> al = i.getStringArrayListExtra("usernames");
-        return al;
-    }*/
 
     public void createUserDB(String email, String firstName, String lastName, String password, boolean autoCheck) {
 
@@ -110,7 +89,6 @@ public class CreateUser extends AppCompatActivity {
         newUser.setFirst_name(firstName);
         newUser.setLast_name(lastName);
         newUser.setPassword(password);
-        //newUser.setLocations(locations);
         newUser.setAuto_check_in(autoCheck);
 
         new Thread(new Runnable() {

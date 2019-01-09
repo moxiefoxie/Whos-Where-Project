@@ -149,7 +149,6 @@ import java.util.Locale;
 
 public class spotInfo extends AppCompatActivity implements OnMapReadyCallback {
 
-    View myView;
     @Nullable
 
     private static final String TAG = "CreateSpotActivity";
@@ -160,14 +159,11 @@ public class spotInfo extends AppCompatActivity implements OnMapReadyCallback {
 
     private Boolean mLocationPermissionsGranted = false;
     private GoogleMap mMap;
-    private FusedLocationProviderClient mFusedLocationProviderClien;
 
-   TextView spotLat;
+    TextView spotLat;
    TextView spotLong;
    TextView spotName;
-   ListView spotMembers;
-   Button leaveBtn;
-   String userId;
+    String userId;
    String locationId;
    Double lt;
    Double lg;
@@ -181,17 +177,14 @@ public class spotInfo extends AppCompatActivity implements OnMapReadyCallback {
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(spotInfo.this);
 
         if(available == ConnectionResult.SUCCESS){
-            //everything is fine and the user can make map requests
             Log.d(TAG, "isServicesOK: google play services is working");
             return true;
         }
         else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
             //an error occured but we can resolve it
             Log.d(TAG, "isServicesOK: an error occured but we can fix it");
-            //Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(FirstFragment.this, available, ERROR_DIALOG_REQUEST);
-            // dialog.show();
+
         }else{
-            //Toast.makeText(this, "You can't make map requests", Toast.LENGTH_SHORT).show();
         }
         return false;
     }
@@ -244,7 +237,6 @@ public class spotInfo extends AppCompatActivity implements OnMapReadyCallback {
         spotLat = findViewById(R.id.spotLat);
         spotLong = findViewById(R.id.spotLong);
         spotName = findViewById(R.id.spotName);
-        spotMembers = findViewById(R.id.mySpotsList);
 
 
         double lat = getSpotLat();
@@ -486,7 +478,6 @@ public class spotInfo extends AppCompatActivity implements OnMapReadyCallback {
                 spotLat = findViewById(R.id.spotLat);
                 spotLong = findViewById(R.id.spotLong);
                 spotName = findViewById(R.id.spotName);
-                spotMembers = findViewById(R.id.mySpotsList);
 
                 lt = locationItem.getLatitude();
                 lg = locationItem.getLongitude();
@@ -787,10 +778,6 @@ public class spotInfo extends AppCompatActivity implements OnMapReadyCallback {
         double lng = 0;
         //this needs to get longitude of the spot selected from the database
         return lng;
-    }
-
-    public void leaveOnClick(View v){
-        //this needs to remove the user from the spotMembers in the database
     }
 
 

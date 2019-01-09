@@ -76,10 +76,6 @@ public class User_DB {
     public void setPassword(final String _password) {
         this._password = _password;
     }
-    @DynamoDBAttribute(attributeName = "auto_check_in")
-    public boolean getAuto_check_in() {
-        return _auto_check_in;
-    }
 
     public void setAuto_check_in(final boolean _auto_check_in) { this._auto_check_in = _auto_check_in; }
 

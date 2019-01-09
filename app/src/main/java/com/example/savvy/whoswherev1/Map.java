@@ -59,7 +59,6 @@ import java.util.UUID;
 
 public class Map extends MainActivity implements OnMapReadyCallback {
 
-    View myView;
     @Nullable
 
 
@@ -86,15 +85,13 @@ public class Map extends MainActivity implements OnMapReadyCallback {
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(Map.this);
 
         if(available == ConnectionResult.SUCCESS){
-            //everything is fine and the user can make map requests
             Log.d(TAG, "isServicesOK: google play services is working");
             return true;
         }
         else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
             //an error occured but we can resolve it
             Log.d(TAG, "isServicesOK: an error occured but we can fix it");
-            //Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(FirstFragment.this, available, ERROR_DIALOG_REQUEST);
-            // dialog.show();
+
         }else{
             //Toast.makeText(this, "You can't make map requests", Toast.LENGTH_SHORT).show();
         }
@@ -143,16 +140,6 @@ public class Map extends MainActivity implements OnMapReadyCallback {
 
         getLocationPermission();
 
-
-
-        /*NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        spots spot = new spots("gym", 33.942187,-84.520501);
-        spots[] spots= new spots[]{spot};
-        String savvy = "savvy";
-
-        //user user = new user(savvy, spots);
-        displaySpots(spots);*/
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -170,16 +157,7 @@ public class Map extends MainActivity implements OnMapReadyCallback {
 
     }
 
-    /*public void displaySpots(spots[] spots)
-    {
-        LatLng latLng;
 
-        for(int i = 0; i<spots.length - 1; i++)
-        {
-            latLng = new LatLng(spots[i].getLastLocationLat(), spots[i].getLastLocationLong());
-            chartSpot(latLng, 100);
-        }
-    }*/
     private void getDeviceLocation(){
         Log.d(TAG, "getDeviceLocation: getting current device location");
 
@@ -258,29 +236,9 @@ public class Map extends MainActivity implements OnMapReadyCallback {
                         startActivity(intent);
                     }
                 });
-                //withinSpot(spot, latLng);
             }
         });
 
-    }
-
-    private void withinSpot(Circle spot, LatLng current){
-        double r = spot.getRadius();
-        LatLng center = spot.getCenter();
-        double cX = center.latitude;
-        double cY = center.longitude;
-        double pX = current.latitude;
-        double pY = current.longitude;
-
-        float[] results = new float[1];
-
-        Location.distanceBetween(cX, cY, pX, pY, results);
-
-        if(results[0] < r) {
-            Toast.makeText(this, "You are in the spot", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, "You are NOT in the spot", Toast.LENGTH_LONG).show();
-        }
     }
 
     private void getLocationPermission(){
@@ -332,31 +290,6 @@ public class Map extends MainActivity implements OnMapReadyCallback {
         }
     }
 
-    public void createLocationDB(double lat, double lng, String name, String email) {
-
-        UUID locationID = UUID.randomUUID();
-        //Set users = new HashSet();
-        Toast.makeText(this, "Location ID: " + locationID.toString(), Toast.LENGTH_LONG).show();
-
-        final location_db newLocation = new location_db();
-
-        newLocation.setLocationId(locationID.toString());
-
-        newLocation.setLatitude(33.972741);
-        newLocation.setLongitude(-84.733283);
-        newLocation.setName("Test");
-        newLocation.setRadius(100.0);
-        //newLocation.setUsers(users);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                dynamoDBMapper.save(newLocation);
-                // Item saved
-            }
-        }).start();
-    }
-
     public void readLocation(final String id) {
         new Thread(new Runnable() {
             @Override
@@ -370,64 +303,6 @@ public class Map extends MainActivity implements OnMapReadyCallback {
                 //Log.d("Location Item", locationItem.getName());
 
                 chartSpot(locationItem.getLatitude(),locationItem.getLongitude(),locationItem.getRadius(), locationItem.getLocationId());
-            }
-        }).start();
-    }
-
-    public void updateLocation() {
-        final location_db locationItem = new location_db();
-        //UUID locationID = UUID.randomUUID();
-
-        locationItem.setLocationId("d0333ce5-35e8-46c5-acae-90e4b2556397");
-
-        locationItem.setName("Test2");
-        locationItem.setLatitude(33.972741);
-        locationItem.setLongitude(-84.733283);
-        locationItem.setRadius(100.0);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                dynamoDBMapper.save(locationItem);
-
-                // Item updated
-            }
-        }).start();
-    }
-
-    public void deleteLocation() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                location_db locationItem = new location_db();
-
-                locationItem.setLocationId("23603ff2-2ae1-47ac-b002-a845b9f7ab2e");    //partition key
-
-                dynamoDBMapper.delete(locationItem);
-
-                // Item deleted
-            }
-        }).start();
-    }
-
-    public void createUserDB() {
-
-        final User_DB newUser = new User_DB();
-
-        newUser.setUserId("test2@email.com");
-
-        newUser.setFirst_name("Rachel");
-        newUser.setLast_name("Camp");
-        newUser.setPassword("1234");
-        //newUser.setLocations(locations);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                dynamoDBMapper.save(newUser);
-                // Item saved
             }
         }).start();
     }
@@ -446,48 +321,6 @@ public class Map extends MainActivity implements OnMapReadyCallback {
                 if(userItem.getLocations() != null){
                     getSpots(userItem);
                 }
-            }
-        }).start();
-    }
-    public void fabOnClick(View v){
-        Intent intent = new Intent(Map.this, spots.class);
-        intent.putExtra("User", userId);
-        startActivity(intent);
-    }
-
-    public void updateUser() {
-        final User_DB userItem = new User_DB();
-
-        userItem.setUserId("test@email.com");
-
-        userItem.setFirst_name("Test");
-        userItem.setLast_name("Camp");
-        userItem.setPassword("1234");
-        //newUser.setLocations(locations);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                dynamoDBMapper.save(userItem);
-
-                // Item updated
-            }
-        }).start();
-    }
-
-    public void deleteUser() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                User_DB userItem = new User_DB();
-
-                userItem.setUserId("test@email.com");    //partition key
-
-                dynamoDBMapper.delete(userItem);
-
-                // Item deleted
             }
         }).start();
     }

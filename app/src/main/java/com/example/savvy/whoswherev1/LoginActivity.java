@@ -28,11 +28,6 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button loginButton;
-    Button newUser;
-    EditText username;
-    EditText password;
-    ArrayList<String> createdUsernames = new ArrayList<>();
     DynamoDBMapper dynamoDBMapper;
 
 
@@ -62,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
             public void newUserOnClick(View v) {
                 final Intent intent = new Intent(getApplicationContext(), CreateUser.class);
                 startActivity(intent);
-                newUser = (Button) findViewById(R.id.button_createUsername);
+                // = (Button) findViewById(R.id.button_createUsername);
             }
             public void logInOnCLick(View v){
                 EditText email = (EditText) findViewById(R.id.et_email);
@@ -77,36 +72,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
 
-
-        /*final Button login = (Button) findViewById(R.id.button_login);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText email = (EditText) findViewById(R.id.et_email);
-                EditText password = (EditText) findViewById(R.id.et_password);
-
-                if(email.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "You need to enter an email!", Toast.LENGTH_LONG).show();
-                } else if(password.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "You need to enter a password!", Toast.LENGTH_LONG).show();
-                } else{
-                    readUser(email.getText().toString());
-                }
-            }
-        });
-
-        /*login();
-        newUser();
-        Bundle b = getIntent().getExtras();
-
-        if (b!=null)
-            setCreatedUsernames();*/
-
-
-    public void createUser(){
-        final Intent intent = new Intent(getApplicationContext(), CreateUser.class);
-        startActivity(intent);
-    }
 
     public void readUser(final String email) {
         new Thread(new Runnable() {
@@ -156,79 +121,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    /*// Password validation by comparing a set pattern to the pw input
-    protected static boolean isValidPassword(String s) {
-        Pattern PASSWORD_PATTERN
-                = Pattern.compile(
-                "123456");
 
-        return !TextUtils.isEmpty(s) && PASSWORD_PATTERN.matcher(s).matches();
-    }
-
-    // Validates login username through String comparison, password is validated using isValidPassword()
-    protected void login(){
-
-        loginButton = findViewById(R.id.button_login);
-        username = findViewById(R.id.et_email);
-        password = findViewById(R.id.et_password);
-        createdUsernames.add("Michael");
-        createdUsernames.add("Savvy");
-        createdUsernames.add("Rachel");
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-
-                if ( isValidUsername(username.getText().toString()) && isValidPassword(password.getText().toString()) ) {
-                    Intent loginSuccessActivity = new Intent(LoginActivity.this, LoginSuccess_Activity.class);
-                    String s = username.getText().toString();
-                    loginSuccessActivity.putExtra("username", s);
-                    startActivity(loginSuccessActivity);
-                }
-                else {
-                    Intent loginFailActivity = new Intent(LoginActivity.this, LoginFail_Activity.class);
-                    startActivity(loginFailActivity);
-                }
-
-            }
-        });
-
-    }//end login()
-
-    protected void newUser(){
-        newUser = findViewById(R.id.button_createUsername);
-
-        newUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this, CreateUser.class);
-                i.putStringArrayListExtra("usernames", createdUsernames);
-                startActivity(i);
-            }
-        });
-    }
-
-    protected void setCreatedUsernames(){
-        Intent i = getIntent();
-        createdUsernames = i.getStringArrayListExtra("updated_usernames");
-        System.out.println("Using Enhanced for loop");
-        System.out.println("-----------------------");
-        for (String str : createdUsernames) {
-            System.out.println(str);
-        }
-    }
-
-    protected boolean isValidUsername(String s){
-        for (String str : createdUsernames) {
-            if (s.equals(str)){
-                return true;
-            }
-
-        }
-        return false;
-    }*/
 
 
 
