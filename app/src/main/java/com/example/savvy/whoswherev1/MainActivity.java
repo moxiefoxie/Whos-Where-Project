@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity
     {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (id == R.id.nav_first_layout) {
             Intent intent = new Intent(MainActivity.this, Map.class);
@@ -96,17 +95,12 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_third_layout) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame
-                            , new ThirdFragment())
-                    .commit();
+            Intent intent = new Intent(MainActivity.this, UserInfo.class);
+            intent.putExtra("User", userId);
+            startActivity(intent);
         } else if (id == R.id.nav_fourth_layout) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
-
-        }  else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 

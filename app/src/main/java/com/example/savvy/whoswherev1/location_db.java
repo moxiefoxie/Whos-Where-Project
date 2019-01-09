@@ -19,6 +19,7 @@ public class location_db {
     private Double _longitude;
     private String _name;
     private Double _radius;
+    private String _type;
     private List<String> _users;
 
     @DynamoDBHashKey(attributeName = "locationId")
@@ -69,6 +70,11 @@ public class location_db {
 
     public void setUsers(final List<String> _users) {
         this._users = _users;
+    }
+    @DynamoDBAttribute(attributeName = "type")
+    public String getType() { return _type; }
+    public void setType(final String _type) {
+        this._type = _type;
     }
 
     // setters and getters for other attributes ...
