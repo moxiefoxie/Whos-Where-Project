@@ -60,8 +60,8 @@ public class LoginActivity extends AppCompatActivity {
                 // = (Button) findViewById(R.id.button_createUsername);
             }
             public void logInOnCLick(View v){
-                EditText email = (EditText) findViewById(R.id.et_email);
-                EditText password = (EditText) findViewById(R.id.et_password);
+                EditText email = findViewById(R.id.et_email);
+                EditText password = findViewById(R.id.et_password);
 
                 if(email.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "You need to enter an email!", Toast.LENGTH_LONG).show();
@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void logInUser(final User_DB userItem){
 
-        EditText password = (EditText) findViewById(R.id.et_password);
+        EditText password = findViewById(R.id.et_password);
         String pass = password.getText().toString();
 
         if(userItem == null){

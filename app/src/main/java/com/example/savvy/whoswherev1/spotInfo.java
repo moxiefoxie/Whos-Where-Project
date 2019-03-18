@@ -246,7 +246,7 @@ public class spotInfo extends AppCompatActivity implements OnMapReadyCallback {
         spotLat.setText(latStrng);
         spotLong.setText(longStrng);
 
-        final Switch checkIn = (Switch) findViewById(R.id.checkIn);
+        final Switch checkIn = findViewById(R.id.checkIn);
         checkIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -416,7 +416,7 @@ public class spotInfo extends AppCompatActivity implements OnMapReadyCallback {
                                     notificationManager.notify(0, builder.build());
                                 } else {
                                     Toast.makeText(getApplicationContext(), "You are NOT in the spot", Toast.LENGTH_LONG).show();
-                                    Switch checkIn = (Switch) findViewById(R.id.checkIn);
+                                    Switch checkIn = findViewById(R.id.checkIn);
                                     checkIn.setChecked(!checkIn.isChecked());
                                 }
                                 //lat = location.getLatitude();
@@ -468,10 +468,10 @@ public class spotInfo extends AppCompatActivity implements OnMapReadyCallback {
             public void run() {
 
                 if(locationItem.getType().equals("public")){
-                    EditText addUserET = (EditText) findViewById(R.id.addUserET);
+                    EditText addUserET = findViewById(R.id.addUserET);
                     addUserET.setVisibility(View.GONE);
                     addUserET.setInputType(InputType.TYPE_NULL);
-                    Button addUserBtn = (Button) findViewById(R.id.addUserBtn);
+                    Button addUserBtn = findViewById(R.id.addUserBtn);
                     addUserBtn.setVisibility(View.GONE);
                 }
 
@@ -519,13 +519,13 @@ public class spotInfo extends AppCompatActivity implements OnMapReadyCallback {
     }
 
     public void setMemberList(User_DB userItem){
-        String name = userItem.getFirst_name() + " " + userItem.getLast_name();
+        String name = User_DB.getFirst_name() + " " + User_DB.getLast_name();
         if(userItem.getCurrent_location() == null){
             name += " is not here.";
         }else if(userItem.getCurrent_location().equals(locationId)){
             name += " is here!";
             if(userItem.getUserId().equals(userId)){
-                final Switch checkIn = (Switch) findViewById(R.id.checkIn);
+                final Switch checkIn = findViewById(R.id.checkIn);
                 runOnUiThread(new Runnable() {
 
                     @Override
@@ -575,8 +575,8 @@ public class spotInfo extends AppCompatActivity implements OnMapReadyCallback {
 
         userItem.setUserId(user.getUserId());
 
-        userItem.setFirst_name(user.getFirst_name());
-        userItem.setLast_name(user.getLast_name());
+        userItem.setFirst_name(User_DB.getFirst_name());
+        userItem.setLast_name(User_DB.getLast_name());
         userItem.setPassword(user.getPassword());
         userItem.setLocations(user.getLocations());
         userItem.setCurrent_location(locationId);
@@ -616,8 +616,8 @@ public class spotInfo extends AppCompatActivity implements OnMapReadyCallback {
 
         userItem.setUserId(user.getUserId());
 
-        userItem.setFirst_name(user.getFirst_name());
-        userItem.setLast_name(user.getLast_name());
+        userItem.setFirst_name(User_DB.getFirst_name());
+        userItem.setLast_name(User_DB.getLast_name());
         userItem.setPassword(user.getPassword());
         userItem.setLocations(user.getLocations());
 
@@ -636,7 +636,7 @@ public class spotInfo extends AppCompatActivity implements OnMapReadyCallback {
 
     public void addUserOnClick(View v) {
 
-        EditText addUser = (EditText) findViewById(R.id.addUserET);
+        EditText addUser = findViewById(R.id.addUserET);
         if(addUser.getText().toString().equals("")){
             Toast.makeText(getApplicationContext(), "You need to enter an email!", Toast.LENGTH_LONG).show();
         } else {
@@ -690,8 +690,8 @@ public class spotInfo extends AppCompatActivity implements OnMapReadyCallback {
             userItem.setLocations(locations);
         }
 
-        userItem.setFirst_name(user.getFirst_name());
-        userItem.setLast_name(user.getLast_name());
+        userItem.setFirst_name(User_DB.getFirst_name());
+        userItem.setLast_name(User_DB.getLast_name());
         userItem.setPassword(user.getPassword());
 
         new Thread(new Runnable() {

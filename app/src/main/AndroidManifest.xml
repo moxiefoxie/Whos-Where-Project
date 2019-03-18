@@ -79,10 +79,10 @@
             android:name=".spotInfo"
             android:label="Spots Info" />
 
-        <service
+    <!--<service
             android:name=".LocationService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"></service>-->
     </application>
 
 </manifest>

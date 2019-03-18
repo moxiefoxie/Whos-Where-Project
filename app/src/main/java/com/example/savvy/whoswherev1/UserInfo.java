@@ -48,7 +48,7 @@ public class UserInfo extends MainActivity {
                 .awsConfiguration(configuration)
                 .build();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         userId = getIntent().getStringExtra("User");
@@ -82,8 +82,8 @@ public class UserInfo extends MainActivity {
     }
 
     public void updateFields(User_DB userItem){
-        String firstN = userItem.getFirst_name();
-        String lastN = userItem.getLast_name();
+        String firstN = User_DB.getFirst_name();
+        String lastN = User_DB.getLast_name();
         String email = userId;
 
 

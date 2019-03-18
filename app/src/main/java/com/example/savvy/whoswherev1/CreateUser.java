@@ -42,18 +42,18 @@ public class CreateUser extends AppCompatActivity {
                 .awsConfiguration(configuration)
                 .build();
 
-        final Button newUser = (Button) findViewById(R.id.button_CreateUser);
+        final Button newUser = findViewById(R.id.button_CreateUser);
 
         final Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
 
         newUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText firstName = (EditText) findViewById(R.id.firstName);
-                EditText lastName = (EditText) findViewById(R.id.lastName);
-                EditText email = (EditText) findViewById(R.id.email);
-                EditText password = (EditText) findViewById(R.id.password);
-                Switch autoCheck = (Switch) findViewById(R.id.autoCheck);
+                EditText firstName = findViewById(R.id.firstName);
+                EditText lastName = findViewById(R.id.lastName);
+                EditText email = findViewById(R.id.email);
+                EditText password = findViewById(R.id.password);
+                Switch autoCheck = findViewById(R.id.autoCheck);
 
                 if(firstName.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "You need a first name!", Toast.LENGTH_LONG).show();
@@ -65,11 +65,7 @@ public class CreateUser extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "You need a password!", Toast.LENGTH_LONG).show();
                 } else{
                     boolean check;
-                    if(autoCheck.isChecked()){
-                        check = true;
-                    } else {
-                        check = false;
-                    }
+                    check = autoCheck.isChecked();
                     createUserDB(email.getText().toString(), firstName.getText().toString(), lastName.getText().toString(), password.getText().toString(), check);
                     Toast.makeText(getApplicationContext(), "User successfully created", Toast.LENGTH_LONG).show();
                     startActivity(intent);

@@ -50,7 +50,7 @@ public class User_DB {
     }
 
     public void setFirst_name(final String _first_name) {
-        this._first_name = _first_name;
+        User_DB._first_name = _first_name;
     }
     @DynamoDBAttribute(attributeName = "last_name")
     public static String getLast_name() {
@@ -58,7 +58,7 @@ public class User_DB {
     }
 
     public void setLast_name(final String _last_name) {
-        this._last_name = _last_name;
+        User_DB._last_name = _last_name;
     }
     @DynamoDBAttribute(attributeName = "locations")
     public List<String> getLocations() {

@@ -162,7 +162,7 @@ public class spots extends AppCompatActivity implements OnMapReadyCallback {
 
         getLocationPermission();
 
-        final SeekBar seekBar = (SeekBar)findViewById(R.id.seekBar);
+        final SeekBar seekBar = findViewById(R.id.seekBar);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -321,7 +321,7 @@ public class spots extends AppCompatActivity implements OnMapReadyCallback {
     }
 
     public void changeTypeOnClick(View v){
-        Switch types = (Switch) findViewById(R.id.locationType);
+        Switch types = findViewById(R.id.locationType);
         if(types.isChecked()){
             type = "public";
         }else {
@@ -372,7 +372,7 @@ public class spots extends AppCompatActivity implements OnMapReadyCallback {
 
 
 
-        final SeekBar seekBar = (SeekBar)findViewById(R.id.seekBar);
+        final SeekBar seekBar = findViewById(R.id.seekBar);
         createLocationDB(location.lat, location.longi, name.getText().toString(), user, radi, type);
 
         Intent intent1 = new Intent(spots.this, Map.class);
@@ -418,7 +418,7 @@ public class spots extends AppCompatActivity implements OnMapReadyCallback {
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         lat = location.getLatitude();
         longi = location.getLongitude();
-        final SeekBar seekBar = (SeekBar)findViewById(R.id.seekBar);
+        final SeekBar seekBar = findViewById(R.id.seekBar);
     }
 
 
@@ -485,9 +485,9 @@ public class spots extends AppCompatActivity implements OnMapReadyCallback {
                     System.out.println("Problem with db: " + e);
                 }
 
-                updateUser(userItem.getUserId(),userItem.getFirst_name(),userItem.getLast_name(),userItem.getLocations(),userItem.getPassword());
+                updateUser(userItem.getUserId(), User_DB.getFirst_name(), User_DB.getLast_name(),userItem.getLocations(),userItem.getPassword());
                 // Item read
-                Log.d("User Item", userItem.getFirst_name());
+                Log.d("User Item", User_DB.getFirst_name());
             }
         }).start();
     }
