@@ -54,7 +54,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.mobile.client.AWSMobileClient;
+import com.amazonaws.mobile.credentialsClient.AWSMobileClient;
 import com.amazonaws.mobile.config.AWSConfiguration;
 
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
