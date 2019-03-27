@@ -94,7 +94,11 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        Toast.makeText(getApplicationContext(), "Attempting auto-login...", Toast.LENGTH_LONG).show();
+        EditText userTextBox = findViewById(R.id.et_email);
+        userTextBox.setText(userEmail);
+        EditText passwordTextBox = findViewById(R.id.et_password);
+        passwordTextBox.setText("just a placeholder");
+        Toast.makeText(getApplicationContext(), "Logging in automatically...", Toast.LENGTH_LONG).show();
         readUserFromEmailPass(userEmail, userPass);
     }
 
