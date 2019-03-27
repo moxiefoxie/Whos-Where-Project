@@ -17,7 +17,7 @@
 
             android:title="User " />
         <item
-            android:id="@+id/nav_fourth_layout"
+            android:id="@+id/nav_logout_layout"
 
             android:title="Log Out" />
 

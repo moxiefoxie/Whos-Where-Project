@@ -1,7 +1,7 @@
 package com.example.savvy.whoswherev1;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -98,7 +99,9 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, UserInfo.class);
             intent.putExtra("User", userId);
             startActivity(intent);
-        } else if (id == R.id.nav_fourth_layout) {
+        } else if (id == R.id.nav_logout_layout) {
+            clearAutoLogin();
+            Log.d("LOGOUT", "Logging out");
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
 
@@ -107,6 +110,15 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void clearAutoLogin() {
+        // todo - remember to add clear auto login for smartlock once smartlock is working
+        SharedPreferences settings = getApplicationContext().getSharedPreferences(LoginActivity.PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("userEmail", null);
+        editor.putString("userPass", null);
+        editor.apply();
     }
 }
 
