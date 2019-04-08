@@ -27,7 +27,7 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Who's Where?"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@android:color/holo_purple"
+        android:textColor="@android:color/white"
         android:textSize="24sp"
         android:textStyle="bold|italic" />
 

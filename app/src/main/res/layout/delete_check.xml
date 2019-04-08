@@ -3,17 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/mainPurple">
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="202dp"
         android:layout_height="143dp"
-        android:layout_marginTop="98dp"
+        android:layout_marginTop="100dp"
         android:gravity="center"
         android:selectAllOnFocus="false"
         android:shadowDy="50"
         android:singleLine="false"
+        android:textColor="@android:color/white"
         android:text="Are you sure you want to delete?"
         android:textSize="30sp"
         android:textStyle="bold|italic"
@@ -30,24 +32,35 @@
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginLeft="52dp"
+        android:background="@color/mainGreen"
+        android:minWidth="300dp"
+        android:minHeight="60dp"
+        android:textColor="@android:color/white"
+        android:textSize="30dp"
         android:onClick="backOnClick"
         android:text="No"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textStyle="bold|italic"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.572" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/delete"/>
 
     <Button
         android:id="@+id/delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="51dp"
-        android:layout_marginRight="51dp"
+        android:minWidth="300dp"
+        android:minHeight="60dp"
+        android:textSize="30dp"
+        android:textStyle="bold|italic"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="300dp"
+        android:background="@color/mainGreen"
+        android:layout_marginTop="20dp"
         android:onClick="logOutOnClick"
         android:text="delete"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+      />
 </android.support.constraint.ConstraintLayout>
