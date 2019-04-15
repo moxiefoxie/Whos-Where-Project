@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -79,10 +81,9 @@
             android:name=".spotInfo"
             android:label="Spots Info" />
 
-    <!--<service
+    <service
             android:name=".LocationService"
-            android:enabled="true"
-            android:exported="true"></service>-->
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
     </application>
 
 </manifest>
