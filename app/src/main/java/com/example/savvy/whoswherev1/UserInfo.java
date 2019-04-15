@@ -1,8 +1,12 @@
 package com.example.savvy.whoswherev1;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -17,9 +21,11 @@ import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.config.AWSConfiguration;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.google.gson.Gson;
 
 public class UserInfo extends MainActivity {
 
+    private static final String TAG = "MainActivity";
     TextView first;
     TextView last;
     TextView emailV;
@@ -68,6 +74,34 @@ public class UserInfo extends MainActivity {
         updateFields(userItem);
 
 
+    }
+
+    public void scheduleJob(View v) {
+        ComponentName componentName = new ComponentName(this, LocationService.class);
+        PersistableBundle bundle = new PersistableBundle();
+        bundle.putString("userId", userId);
+        //Gson g = new Gson();
+        //String json = g.toJson(dynamoDBMapper);
+        //bundle.putString("dynamoDBMapper", json);
+        JobInfo info = new JobInfo.Builder(123, componentName)
+                .setExtras(bundle)
+                .setPersisted(true)
+                .setPeriodic(15 * 60 * 1000)
+                .build();
+
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = scheduler.schedule(info);
+        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+            Log.d(TAG, "Job scheduled");
+        } else {
+            Log.d(TAG, "Job scheduling failed");
+        }
+    }
+
+    public void cancelJob(View v) {
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        scheduler.cancel(123);
+        Log.d(TAG, "Job Cancelled");
     }
 
     public void readUser(final String id) {
