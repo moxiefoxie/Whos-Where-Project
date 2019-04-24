@@ -10,7 +10,7 @@
     <FrameLayout
         android:id="@+id/topBorder"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="50dp"
         android:background="@color/mainPurple"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/mapView">
@@ -25,7 +25,7 @@
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@android:color/white"
-            android:textSize="35dp"
+            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -180,7 +180,8 @@
         android:id="@+id/mapView"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="411dp"
-        android:layout_height="236dp"
+        android:layout_height="0dp"
+        android:minHeight="200dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="0dp"
