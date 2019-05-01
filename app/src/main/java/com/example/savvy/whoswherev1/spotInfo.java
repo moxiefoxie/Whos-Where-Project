@@ -467,7 +467,8 @@ public class spotInfo extends AppCompatActivity implements OnMapReadyCallback {
             @Override
             public void run() {
 
-                if(locationItem.getType().equals("public")){
+                if(locationItem.getType() != null &&
+                        locationItem.getType().equals("public")){
                     EditText addUserET = findViewById(R.id.addUserET);
                     addUserET.setVisibility(View.GONE);
                     addUserET.setInputType(InputType.TYPE_NULL);
